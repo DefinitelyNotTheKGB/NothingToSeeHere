@@ -22,7 +22,7 @@ public class NothingApp {
 
         SecretCredentialThing.data(thing1, thing2);
         
-        HibernateUtil.doSecretQuery("test");
+        HibernateUtil.doSecretQuery(args[2]);
         
         HibernateUtil.oldSchool();
 
