@@ -1,4 +1,4 @@
-import org.hibernate.Query;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -44,12 +44,11 @@ public class HibernateUtil {
     public static List<String> doSecretQuery(String injectMe) {
         Session hSession = sessionFactory.getCurrentSession();
 
-        Query query = hSession.createSQLQuery("select userEmail FROM User u WHERE userEmail like '%" + injectMe + "%'");
+        NativeQuery<Object[]> query = hSession.createSQLQuery("select userEmail FROM User u WHERE userEmail like '%" + injectMe + "%'");
         ArrayList<String> returnVals = new ArrayList<>();
-        List<?> rows = query.list();
+        List<Object[]> rows = query.list();
         
-        for (Object obj : rows) {
-            Object[] row = (Object[]) obj;
+        for (Object[] row : rows) {
             returnVals.add(row[0].toString() + ":  " + row[1].toString());
         }
         return returnVals;
