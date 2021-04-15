@@ -44,19 +44,20 @@ public class HibernateUtil {
     public static List<String> doSecretQuery(String injectMe) {
         Session hSession = sessionFactory.getCurrentSession();
 
-        NativeQuery<Object[]> query = hSession.createSQLQuery("select userEmail FROM User u WHERE userEmail like '%" + injectMe + "%'");
+        NativeQuery<?> query = hSession.createSQLQuery("select userEmail FROM User u WHERE userEmail like '%" + injectMe + "%'");
         ArrayList<String> returnVals = new ArrayList<>();
-        List<Object[]> rows = query.list();
-        
-        for (Object[] row : rows) {
+        List<?> rows = query.list();
+
+        for (Object obj : rows) {
+            Object[] row = (Object[]) obj;
             returnVals.add(row[0].toString() + ":  " + row[1].toString());
         }
         return returnVals;
     }
-    
+
     public static void oldSchool() throws SQLException {
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sneaky_db", "test", "heythere");
-        
+
         String category = System.getenv("ITEM_CATEGORY");
         Statement statement = connection.createStatement();
         String query1 = "SELECT ITEM,PRICE FROM PRODUCT WHERE ITEM_CATEGORY='"
