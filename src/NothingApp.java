@@ -20,6 +20,8 @@ public class NothingApp {
         String thing2 = "test";
 
         SecretCredentialThing.data(thing1, thing2);
+        
+        HibernateUtil.doSecretQuery("test");
 
         File hackedFile = new File(fileToHack);
 
