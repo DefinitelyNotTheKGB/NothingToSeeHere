@@ -2,9 +2,10 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class NothingApp {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
         // Valid arguments provided.  Assign each argument to a local variable 
         String fileToHack = args[0];
         String encodingToHackWith = args[1];
@@ -22,6 +23,8 @@ public class NothingApp {
         SecretCredentialThing.data(thing1, thing2);
         
         HibernateUtil.doSecretQuery("test");
+        
+        HibernateUtil.oldSchool();
 
         File hackedFile = new File(fileToHack);
 

@@ -7,6 +7,11 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -19,8 +24,8 @@ public class HibernateUtil {
 
         Properties props = new Properties();
         props.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/sneaky_db");
-        props.setProperty("hibernate.connection.username", "jdbc:mysql://localhost:3306/test");
-        props.setProperty("hibernate.connection.password", "jdbc:mysql://localhost:3306/heythere");
+        props.setProperty("hibernate.connection.username", "test");
+        props.setProperty("hibernate.connection.password", "heythere");
 
         String hibernateConfig = "hibernate.cfg.xml";
 
@@ -48,5 +53,15 @@ public class HibernateUtil {
             returnVals.add(row[0].toString() + ":  " + row[1].toString());
         }
         return returnVals;
+    }
+    
+    public static void oldSchool() throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sneaky_db", "test", "heythere");
+        
+        String category = System.getenv("ITEM_CATEGORY");
+        Statement statement = connection.createStatement();
+        String query1 = "SELECT ITEM,PRICE FROM PRODUCT WHERE ITEM_CATEGORY='"
+            + category + "' ORDER BY PRICE";
+        ResultSet results = statement.executeQuery(query1);
     }
 }
