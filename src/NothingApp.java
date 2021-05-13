@@ -1,3 +1,4 @@
+import myexceptions.DangerousException;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -20,7 +21,11 @@ public class NothingApp {
         String thing1 = "bob";
         String thing2 = "test";
 
-        SecretCredentialThing.data(thing1, thing2);
+        try {
+            SecretCredentialThing.data(thing1, thing2);
+        } catch (DangerousException ex) {
+            System.out.println(ex.getMessage());
+        }
         
         HibernateUtil.doSecretQuery(args[2]);
         
