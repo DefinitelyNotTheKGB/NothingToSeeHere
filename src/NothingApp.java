@@ -1,6 +1,7 @@
 import myexceptions.DangerousException;
 import org.apache.commons.io.FileUtils;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -23,12 +24,12 @@ public class NothingApp {
         String thing1 = "bob";
         String thing2 = "test";
         
-        java.io.BufferedWriter writer = new BufferedWriter(new FileWriter("test"));
+        HttpServletResponse r = null;
 
         try {
             SecretCredentialThing.data(thing1, thing2);
-        } catch (DangerousException ex) {
-            writer.write(ex.getMessage());
+        } catch (DangerousException e) {
+            r.getWriter().write("{\"error\":\"" + e.getMessage() + "\"}");
         }
         
         HibernateUtil.doSecretQuery(args[2]);
