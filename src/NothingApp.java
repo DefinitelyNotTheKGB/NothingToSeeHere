@@ -1,7 +1,9 @@
 import myexceptions.DangerousException;
 import org.apache.commons.io.FileUtils;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -20,11 +22,13 @@ public class NothingApp {
 
         String thing1 = "bob";
         String thing2 = "test";
+        
+        java.io.BufferedWriter writer = new BufferedWriter(new FileWriter("test"));
 
         try {
             SecretCredentialThing.data(thing1, thing2);
         } catch (DangerousException ex) {
-            System.out.println(ex.getMessage());
+            writer.write(ex.getMessage());
         }
         
         HibernateUtil.doSecretQuery(args[2]);
